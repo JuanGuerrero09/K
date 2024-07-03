@@ -21,8 +21,6 @@ type longAnswerField struct {
 	textarea textarea.Model
 }
 
-
-
 func NewShortAnswerField() *shortAnswerField {
 	ti := textinput.New()
 	ti.Placeholder = "Your answer here..."

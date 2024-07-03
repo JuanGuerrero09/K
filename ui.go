@@ -130,8 +130,8 @@ func teaui() {
 
 	err := godotenv.Load()
 	if err != nil {
-    log.Fatal("Error loading .env file")
-  }
+		log.Fatal("Error loading .env file")
+	}
 
 	name := os.Getenv("NAME")
 	partnerName := os.Getenv("PARTNERNAME")

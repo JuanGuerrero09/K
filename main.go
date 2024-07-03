@@ -6,6 +6,8 @@ import (
 	"os"
 	"strings"
 	"time"
+
+	tea "github.com/charmbracelet/bubbletea"
 )
 
 type ToDo struct {
@@ -28,6 +30,14 @@ func main() {
 		fmt.Println("Error parsing file:", err)
 		return
 	}
+
+	listModel := initialListmodel(todos)
+
+	p := tea.NewProgram(listModel, tea.WithAltScreen())
+	if _, err := p.Run(); err != nil {
+		fmt.Printf("Alas, there's been an error: %v", err)
+		os.Exit(1)
+}
 
 	for _, todo := range todos {
 		fmt.Printf("%+v\n", todo)
@@ -90,4 +100,64 @@ func ParseFile(file *os.File) ([]ToDo, error) {
 
 	return todos, nil
 
+}
+
+type listScreenModel struct {
+	todoList []ToDo
+	cursor int
+	width, height int
+}
+
+func (m listScreenModel) Init() tea.Cmd {
+	return nil
+}
+
+func (m listScreenModel) View() string {
+	l := "List of items: \n"
+	for i, todo := range(m.todoList) {
+		cursor := " "
+		date := ""
+		if todo.isDone {
+			date = todo.CompletionDate.Format("2006-01-02")
+		}
+		if m.cursor == i{
+			cursor = ">"
+		}
+		l += fmt.Sprintf("%s [ ] %s %s\n", cursor, todo.Text, date)
+
+		
+	}
+	l += "\nPress q to quit.\n"
+	return l
+}
+
+func initialListmodel(todos []ToDo) *listScreenModel {
+	return &listScreenModel{
+		todoList: todos,
+		cursor: 0,
+	}
+}
+
+func (m listScreenModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+	switch msg := msg.(type) {
+	case tea.WindowSizeMsg:
+		m.width = msg.Width
+		m.height = msg.Height
+	case tea.KeyMsg:
+		switch msg.String(){
+		case "ctrl+c", "q":
+			return m, tea.Quit
+		case "down":
+			if m.cursor < len(m.todoList) - 1 {
+				m.cursor++
+			}
+
+		case "up":
+			if m.cursor > 0 {
+				m.cursor--
+			}
+		}
+
+	}
+	return m, nil
 }
