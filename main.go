@@ -7,7 +7,9 @@ import (
 	"strings"
 	"time"
 
+	"github.com/charmbracelet/bubbles/viewport"
 	tea "github.com/charmbracelet/bubbletea"
+	"github.com/charmbracelet/lipgloss"
 )
 
 type ToDo struct {
@@ -37,7 +39,7 @@ func main() {
 	if _, err := p.Run(); err != nil {
 		fmt.Printf("Alas, there's been an error: %v", err)
 		os.Exit(1)
-}
+	}
 
 	for _, todo := range todos {
 		fmt.Printf("%+v\n", todo)
@@ -66,9 +68,9 @@ func ParseFile(file *os.File) ([]ToDo, error) {
 			currentCategory = strings.TrimPrefix(line, "@")
 		} else if strings.HasPrefix(line, "<E>") {
 			currentCategory = "Bonus España"
-			} else if strings.HasPrefix(line, "<EU>") {
+		} else if strings.HasPrefix(line, "<EU>") {
 			currentCategory = "Bonus Europa"
-			}else if strings.HasPrefix(line, "-") {
+		} else if strings.HasPrefix(line, "-") {
 			todo := ToDo{
 				isDone:   false,
 				Text:     strings.TrimSpace(strings.TrimPrefix(line, "-")),
@@ -104,58 +106,70 @@ func ParseFile(file *os.File) ([]ToDo, error) {
 
 type listScreenModel struct {
 	todoList []ToDo
-	cursor int
-	width, height int
+	cursor   int
+	viewport viewport.Model
 }
 
+func initialListmodel(todos []ToDo) *listScreenModel {
+	const width = 78
+
+	vp := viewport.New(width, 25)
+	vp.Style = lipgloss.NewStyle().
+		BorderStyle(lipgloss.RoundedBorder()).
+		BorderForeground(lipgloss.Color("62")).
+		PaddingRight(2)
+
+	return &listScreenModel{
+		todoList: todos,
+		cursor:   0,
+		viewport: vp,
+	}
+}
 func (m listScreenModel) Init() tea.Cmd {
 	return nil
 }
 
 func (m listScreenModel) View() string {
 	l := "List of items: \n"
-	for i, todo := range(m.todoList) {
+	for i, todo := range m.todoList {
 		cursor := " "
 		date := ""
 		if todo.isDone {
 			date = todo.CompletionDate.Format("2006-01-02")
 		}
-		if m.cursor == i{
+		if m.cursor == i {
 			cursor = ">"
 		}
 		l += fmt.Sprintf("%s [ ] %s %s\n", cursor, todo.Text, date)
 
-		
 	}
 	l += "\nPress q to quit.\n"
-	return l
-}
 
-func initialListmodel(todos []ToDo) *listScreenModel {
-	return &listScreenModel{
-		todoList: todos,
-		cursor: 0,
-	}
+	m.viewport.SetContent(l)
+	return m.viewport.View()
 }
 
 func (m listScreenModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
-	case tea.WindowSizeMsg:
-		m.width = msg.Width
-		m.height = msg.Height
+	// case tea.WindowSizeMsg:
+	// 	m.width = msg.Width
+	// 	m.height = msg.Height
 	case tea.KeyMsg:
-		switch msg.String(){
+		switch msg.String() {
 		case "ctrl+c", "q":
 			return m, tea.Quit
 		case "down":
-			if m.cursor < len(m.todoList) - 1 {
+			if m.cursor < len(m.todoList)-1 {
 				m.cursor++
 			}
-
 		case "up":
 			if m.cursor > 0 {
 				m.cursor--
 			}
+		default:
+			var cmd tea.Cmd
+			m.viewport, cmd = m.viewport.Update(msg)
+			return m, cmd
 		}
 
 	}
