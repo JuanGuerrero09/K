@@ -41,9 +41,9 @@ func main() {
 		os.Exit(1)
 	}
 
-	for _, todo := range todos {
-		fmt.Printf("%+v\n", todo)
-	}
+	// for _, todo := range todos {
+	// 	fmt.Printf("%+v\n", todo)
+	// }
 }
 
 func ParseFile(file *os.File) ([]ToDo, error) {
@@ -89,7 +89,7 @@ func ParseFile(file *os.File) ([]ToDo, error) {
 			}
 			todo := ToDo{
 				isDone:         true,
-				Text:           strings.TrimSpace(strings.TrimPrefix("F", parts[0])),
+				Text:           strings.TrimSpace(strings.TrimPrefix(parts[0], "F")),
 				Category:       currentCategory,
 				CompletionDate: completationDate,
 			}
@@ -108,6 +108,7 @@ type listScreenModel struct {
 	todoList []ToDo
 	cursor   int
 	viewport viewport.Model
+	width, height int
 }
 
 func initialListmodel(todos []ToDo) *listScreenModel {
@@ -131,29 +132,50 @@ func (m listScreenModel) Init() tea.Cmd {
 
 func (m listScreenModel) View() string {
 	l := "List of items: \n"
-	for i, todo := range m.todoList {
+	start := 0
+	end := m.viewport.Height - 4
+	
+	if m.cursor >= end {
+		start = m.cursor - (m.viewport.Height - 4) + 1
+		end = m.cursor + 1
+	}
+
+	end = min(end, len(m.todoList))
+	
+	for i := start; i < end; i++ {
+		todo := m.todoList[i]
 		cursor := " "
+		checked := " "
 		date := ""
 		if todo.isDone {
 			date = todo.CompletionDate.Format("2006-01-02")
+			checked = "x"
 		}
 		if m.cursor == i {
 			cursor = ">"
 		}
-		l += fmt.Sprintf("%s [ ] %s %s\n", cursor, todo.Text, date)
-
+		l += fmt.Sprintf("%s [%s] %s %s\n", cursor, checked, todo.Text, date)
 	}
-	l += "\nPress q to quit.\n"
+
+
+ 	l += "\nPress q to quit.\n"
 
 	m.viewport.SetContent(l)
-	return m.viewport.View()
+	return lipgloss.NewStyle().Width(m.width).AlignHorizontal(lipgloss.Center).Render(m.viewport.View())
 }
 
 func (m listScreenModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+	var cmd tea.Cmd
+	
 	switch msg := msg.(type) {
-	// case tea.WindowSizeMsg:
-	// 	m.width = msg.Width
-	// 	m.height = msg.Height
+	case tea.WindowSizeMsg:
+		m.width = msg.Width
+		m.height = msg.Height
+		m.viewport.Width = m.width / 2
+		if m.width < 78 {
+				m.viewport.Width = m.width - 2
+		}
+		m.viewport.Height = m.height - 2
 	case tea.KeyMsg:
 		switch msg.String() {
 		case "ctrl+c", "q":
@@ -166,12 +188,16 @@ func (m listScreenModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			if m.cursor > 0 {
 				m.cursor--
 			}
+		case "enter":
+			if m.cursor < len(m.todoList) {
+					m.todoList[m.cursor].isDone = !m.todoList[m.cursor].isDone
+					m.todoList[m.cursor].CompletionDate = time.Now()
+			}
 		default:
-			var cmd tea.Cmd
-			m.viewport, cmd = m.viewport.Update(msg)
 			return m, cmd
 		}
-
+		
 	}
-	return m, nil
+	m.viewport, cmd = m.viewport.Update(msg)
+	return m, cmd
 }
