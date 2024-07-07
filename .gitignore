@@ -3,4 +3,5 @@
 .env
 *.jpg
 list.txt
+newfile.txt
 example.*

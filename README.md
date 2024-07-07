@@ -4,3 +4,5 @@
 
 - [ ] Add color when implemented
 - [ ] Show date (maybe change the display to table view)
+- [ ] Add API for saving todo's
+- [ ] Add logs for future database implementation
