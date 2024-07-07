@@ -16,7 +16,7 @@ type ToDo struct {
 }
 
 func main() {
-	file, err := os.Open("list.txt")
+	file, err := os.Open("newfile.txt")
 	if err != nil {
 		fmt.Println("Error opening file:", err)
 		return
