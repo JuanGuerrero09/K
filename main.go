@@ -12,6 +12,7 @@ type ToDo struct {
 	isDone         bool
 	Text           string
 	Category       string
+	Points         int
 	CompletionDate time.Time
 }
 
@@ -37,11 +38,9 @@ func main() {
 		os.Exit(1)
 	}
 
-	saveFile("newfile.txt",todos)
+	saveFile("newfile.txt", todos)
 
 	// for _, todo := range todos {
 	// 	fmt.Printf("%+v\n", todo)
 	// }
 }
-
-

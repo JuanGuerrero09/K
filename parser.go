@@ -2,9 +2,10 @@ package main
 
 import (
 	"bufio"
-	"strings"
-	"os"
 	"fmt"
+	"os"
+	"strconv"
+	"strings"
 	"time"
 )
 
@@ -33,9 +34,18 @@ func ParseFile(file *os.File) ([]ToDo, error) {
 		} else if strings.HasPrefix(line, "<EU>") {
 			currentCategory = "Bonus Europa"
 		} else if strings.HasPrefix(line, "-") {
+			str := strings.TrimPrefix(line, "-")
+			parts := strings.Split(str, "$")
+			text := strings.TrimSpace(parts[0])
+			points, err := strconv.Atoi(parts[1])
+			if err != nil {
+				fmt.Println("Error not int")
+				return nil, nil
+			}
 			todo := ToDo{
 				isDone:   false,
-				Text:     strings.TrimSpace(strings.TrimPrefix(line, "-")),
+				Text:     strings.TrimSpace(text),
+				Points:   points,
 				Category: currentCategory,
 			}
 			todos = append(todos, todo)
@@ -45,15 +55,19 @@ func ParseFile(file *os.File) ([]ToDo, error) {
 				return nil, fmt.Errorf("invalid format for completed task: %s", line)
 			}
 			dateStr := strings.TrimSpace(parts[1])
+			subStr := strings.Split(strings.TrimPrefix(parts[0], "F"), "$")
+			text := strings.TrimSpace(subStr[0])
+			points, _ := strconv.Atoi(strings.TrimSpace(subStr[1]))
 			completationDate, err := time.Parse("2006-01-02", dateStr)
 			if err != nil {
 				return nil, fmt.Errorf("invalid date format: %s", dateStr)
 			}
 			todo := ToDo{
 				isDone:         true,
-				Text:           strings.TrimSpace(strings.TrimPrefix(parts[0], "F")),
+				Text:           text,
 				Category:       currentCategory,
 				CompletionDate: completationDate,
+				Points:         points,
 			}
 			todos = append(todos, todo)
 		}
@@ -86,9 +100,9 @@ func saveFile(filename string, todos []ToDo) {
 		}
 		var str string
 		if todo.isDone {
-			str = "F "+ todo.Text + " / " + todo.CompletionDate.Format("2006-01-02") + "\n"
-		} else {
-			str = "- " + todo.Text + "\n"
+			str = "F " + todo.Text + " $" + strconv.Itoa(todo.Points) + " / " + todo.CompletionDate.Format("2006-01-02") + "\n"
+			} else {
+			str = "- " + todo.Text + "  $" + strconv.Itoa(todo.Points) + "\n"
 		}
 		_, err := file.WriteString(str)
 		if err != nil {

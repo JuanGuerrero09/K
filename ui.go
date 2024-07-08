@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"strconv"
+	"strings"
 	"time"
 
 	"github.com/charmbracelet/bubbles/viewport"
@@ -35,8 +37,25 @@ func (m listScreenModel) Init() tea.Cmd {
 	return nil
 }
 
+func getPoints(todos []ToDo) int {
+	count := 0
+	for _, todo := range(todos) {
+		if todo.isDone {
+			count += todo.Points
+		} else {
+			continue
+		}
+	}
+	return count
+}
+
 func (m listScreenModel) View() string {
-	l := "List of items: \n"
+	l := "Points: " + strconv.Itoa(getPoints(m.todoList)) 
+	remainSpaces := m.viewport.Width - len(l) - 27
+	l += strings.Repeat(" ", remainSpaces)
+	l += "Points    Date \n"
+
+
 	start := 0
 	end := m.viewport.Height - 4
 
@@ -53,9 +72,10 @@ func (m listScreenModel) View() string {
 	// 	Background(lipgloss.Color("#7D56F4")).
 	// 	Width(22)
 
-
 	for i := start; i < end; i++ {
 		todo := m.todoList[i]
+		remainSpaces := m.viewport.Width - len(todo.Text) - 30
+		spacesStr := strings.Repeat(" ", remainSpaces)
 		cursor := " "
 		checked := " "
 		date := ""
@@ -80,11 +100,11 @@ func (m listScreenModel) View() string {
 		if todo.isDone {
 			date = todo.CompletionDate.Format("2006-01-02")
 			checked = "x"
-			s := fmt.Sprintf("%s [%s] %s %s", cursor, checked, todo.Text, lipgloss.NewStyle().AlignHorizontal(lipgloss.Right).Render(date))
+			s := fmt.Sprintf("%s [%s] %s %s %s    %s", cursor, checked, todo.Text, spacesStr, lipgloss.NewStyle().Foreground(lipgloss.Color("#7F00FF")).Render(strconv.Itoa(todo.Points)), lipgloss.NewStyle().AlignHorizontal(lipgloss.Right).Render(date))
 			l += completedTodoStyle.Render(s)
 			l += fmt.Sprintf("\n")
 		} else {
-			l += fmt.Sprintf("%s [%s] %s %s\n", cursor, checked, todo.Text, date)
+			l += fmt.Sprintf("%s [%s] %s %s %s \n", cursor, checked, todo.Text, spacesStr, lipgloss.NewStyle().Foreground(lipgloss.Color("#7F00FF")).Render(strconv.Itoa(todo.Points)))
 		}
 
 	}
@@ -102,7 +122,13 @@ func (m listScreenModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	case tea.WindowSizeMsg:
 		m.width = msg.Width
 		m.height = msg.Height
-		m.viewport.Width = m.width / 2
+		if m.width /2 < 78 {
+			m.viewport.Width = 78
+
+		} else {
+			m.viewport.Width = m.width / 2
+
+		}
 		if m.width < 78 {
 			m.viewport.Width = m.width - 2
 		}
