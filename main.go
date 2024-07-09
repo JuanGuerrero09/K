@@ -17,18 +17,9 @@ type ToDo struct {
 }
 
 func main() {
-	file, err := os.Open("newfile.txt")
-	if err != nil {
-		fmt.Println("Error opening file:", err)
-		return
-	}
-	defer file.Close()
-
-	todos, err := ParseFile(file)
-	if err != nil {
-		fmt.Println("Error parsing file:", err)
-		return
-	}
+	key := "thisis32bitlongpassphraseimusing"
+	// To be deleted when final txt is done
+	todos, f := getEncryptedTodos(key)
 
 	listModel := initialListmodel(todos)
 
@@ -38,9 +29,6 @@ func main() {
 		os.Exit(1)
 	}
 
-	saveFile("newfile.txt", todos)
+	encryptTodos(key, todos, f)
 
-	// for _, todo := range todos {
-	// 	fmt.Printf("%+v\n", todo)
-	// }
 }
