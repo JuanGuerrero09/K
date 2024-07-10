@@ -17,18 +17,11 @@ type ToDo struct {
 }
 
 func main() {
-	key := "thisis32bitlongpassphraseimusing"
-	// To be deleted when final txt is done
-	todos, f := getEncryptedTodos(key)
-
-	listModel := initialListmodel(todos)
+	listModel := initialListmodel()
 
 	p := tea.NewProgram(listModel, tea.WithAltScreen())
 	if _, err := p.Run(); err != nil {
 		fmt.Printf("Alas, there's been an error: %v", err)
 		os.Exit(1)
 	}
-
-	encryptTodos(key, todos, f)
-
 }
