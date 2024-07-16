@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"slices"
 	"strconv"
 	"strings"
 	"time"
@@ -98,9 +99,11 @@ func (m listScreenModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 				m.cursor--
 			}
 		case "enter", " ":
-			if m.cursor < len(m.todoList) {
-				m.todoList[m.cursor].isDone = !m.todoList[m.cursor].isDone
-				m.todoList[m.cursor].CompletionDate = time.Now()
+			if m.cursor < len(m.activeTodoList) {
+				m.activeTodoList[m.cursor].isDone = !m.activeTodoList[m.cursor].isDone
+				m.activeTodoList[m.cursor].CompletionDate = time.Now()
+				idx := slices.IndexFunc(m.todoList, func(t ToDo) bool {return t.Text == m.activeTodoList[m.cursor].Text})
+				m.todoList[idx] = m.activeTodoList[m.cursor]
 				return m, cmd
 			}
 		case "f":
@@ -110,6 +113,7 @@ func (m listScreenModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 					activeTodo = append(activeTodo, todo)
 				}
 			}
+			m.cursor = 0
 			m.activeTodoList = activeTodo
 		case "r":
 			var activeTodo []ToDo
@@ -118,6 +122,7 @@ func (m listScreenModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 					activeTodo = append(activeTodo, todo)
 				}
 			}
+			m.cursor = 0
 			m.activeTodoList = activeTodo
 		case "a":
 			m.activeTodoList = m.todoList
