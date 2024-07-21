@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
 	"os"
 	"slices"
 	"strconv"
@@ -12,6 +13,19 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 )
+
+var (
+	CHARSET = "⠿⠾⠽⠼⠻⠺⠹⠸⠷⠶⠵⠴⠳⠲⠱⠰⠯⠮⠭⠬⠫⠪⠩⠨⠧⠦⠥⠤⠣⠢⠡⠠⠟⠞⠝⠜⠛⠚⠙⠘⠗⠖⠕⠔⠓⠒⠑⠐⠏⠎⠍⠌⠋⠊⠉⠈⠇⠆⠅⠄⠃⠂⠁"
+)
+
+func getRandomString(length int) string {
+	letters := []rune(CHARSET)
+	b := make([]rune, length)
+	for i := range b {
+			b[i] = letters[rand.Intn(len(letters))]
+	}
+	return string(b)
+}
 
 type listScreenModel struct {
 	todoList       []ToDo
@@ -141,7 +155,7 @@ func (m listScreenModel) View() string {
 	l += "Points    Date \n"
 
 	start := 0
-	end := m.viewport.Height - 4
+	end := m.viewport.Height - 5
 
 	if m.cursor >= end {
 		start = m.cursor - (m.viewport.Height - 4) + 1
@@ -156,7 +170,8 @@ func (m listScreenModel) View() string {
 	// 	Background(lipgloss.Color("#7D56F4")).
 	// 	Width(22)
 
-	for i := start; i < end; i++ {
+	for i := start; i < end ; i++ {
+		var todoStr string
 		todo := m.activeTodoList[i]
 		remainSpaces := m.viewport.Width - len(todo.Text) - 30
 		spacesStr := strings.Repeat(" ", remainSpaces)
@@ -165,16 +180,39 @@ func (m listScreenModel) View() string {
 		date := ""
 		categoryStyle := lipgloss.NewStyle().
 			Foreground(lipgloss.Color("10")).Bold(true)
-
 		completedTodoStyle := lipgloss.NewStyle().Foreground(lipgloss.Color("#68DA37"))
 		if currentCategory == "" {
 			currentCategory = todo.Category
-			l += categoryStyle.Render(currentCategory)
+			categorySpaces := strings.Repeat(" ", m.viewport.Width - len(currentCategory) - 29)
+			var currentCategoryPoints int
+			var totalCategoryPoints int
+			for _, todo := range(m.todoList){
+				if todo.Category == currentCategory {
+					totalCategoryPoints += todo.Points
+					if todo.isDone {
+						currentCategoryPoints += todo.Points
+					}
+				}
+			} 
+			c := fmt.Sprintf("%s %s %d / %d", currentCategory, categorySpaces, currentCategoryPoints, totalCategoryPoints)
+			l += categoryStyle.Render(c)
 			l += "\n"
 		}
 		if currentCategory != todo.Category {
 			currentCategory = todo.Category
-			l += categoryStyle.Render(currentCategory)
+			categorySpaces := strings.Repeat(" ", m.viewport.Width - len(currentCategory) - 29)
+			var currentCategoryPoints int
+			var totalCategoryPoints int
+			for _, todo := range(m.todoList){
+				if todo.Category == currentCategory {
+					totalCategoryPoints += todo.Points
+					if todo.isDone {
+						currentCategoryPoints += todo.Points
+					}
+				}
+			} 
+			c := fmt.Sprintf("%s %s %d / %d", currentCategory, categorySpaces, currentCategoryPoints, totalCategoryPoints)
+			l += categoryStyle.Render(c)
 			l += "\n"
 
 		}
@@ -185,15 +223,19 @@ func (m listScreenModel) View() string {
 			date = todo.CompletionDate.Format("2006-01-02")
 			checked = "x"
 			s := fmt.Sprintf("%s [%s] %s %s %s    %s", cursor, checked, todo.Text, spacesStr, lipgloss.NewStyle().Foreground(lipgloss.Color("#7F00FF")).Render(strconv.Itoa(todo.Points)), lipgloss.NewStyle().AlignHorizontal(lipgloss.Right).Render(date))
-			l += completedTodoStyle.Render(s)
-			l += "\n"
-		} else {
-			l += fmt.Sprintf("%s [%s] %s %s %s \n", cursor, checked, todo.Text, spacesStr, lipgloss.NewStyle().Foreground(lipgloss.Color("#7F00FF")).Render(strconv.Itoa(todo.Points)))
+			todoStr = completedTodoStyle.Render(s)
+			} else {
+				todoStr = fmt.Sprintf("%s [%s] %s %s %s", cursor, checked, todo.Text, spacesStr, lipgloss.NewStyle().Foreground(lipgloss.Color("#7F00FF")).Render(strconv.Itoa(todo.Points)))
+			}
+			
+			if todo.Category == "Other" {
+				todoStr = fmt.Sprintf("%s [%s] %s %s %s", cursor, checked, getRandomString(len(todo.Text)), spacesStr, lipgloss.NewStyle().Foreground(lipgloss.Color("#7F00FF")).Render(strconv.Itoa(todo.Points))) 
+			}
+			l += todoStr + "\n"
+			
 		}
 
-	}
-
-	l += "\nPress q to quit.\n"
+	l += "\nPress q to quit."
 
 	m.viewport.SetContent(l)
 	return lipgloss.NewStyle().Width(m.width).AlignHorizontal(lipgloss.Center).Render(m.viewport.View())
