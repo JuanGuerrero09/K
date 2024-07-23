@@ -16,6 +16,7 @@ import (
 
 var (
 	CHARSET = "⠿⠾⠽⠼⠻⠺⠹⠸⠷⠶⠵⠴⠳⠲⠱⠰⠯⠮⠭⠬⠫⠪⠩⠨⠧⠦⠥⠤⠣⠢⠡⠠⠟⠞⠝⠜⠛⠚⠙⠘⠗⠖⠕⠔⠓⠒⠑⠐⠏⠎⠍⠌⠋⠊⠉⠈⠇⠆⠅⠄⠃⠂⠁"
+	totalPoints int
 )
 
 func getRandomString(length int) string {
@@ -149,13 +150,19 @@ func (m listScreenModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func (m listScreenModel) View() string {
-	l := "Points: " + strconv.Itoa(getPoints(m.todoList))
+	
+	if totalPoints == 0 {
+		for _, todo := range(m.todoList){
+			totalPoints += todo.Points
+		}
+	}
+	
+	l := "Points: " + strconv.Itoa(getPoints(m.todoList)) + "/" + strconv.Itoa(totalPoints)
 	remainSpaces := m.viewport.Width - len(l) - 27
 	l += strings.Repeat(" ", remainSpaces)
 	l += "Points    Date \n"
-
 	start := 0
-	end := m.viewport.Height - 5
+	end := m.viewport.Height - 4
 
 	if m.cursor >= end {
 		start = m.cursor - (m.viewport.Height - 4) + 1
@@ -174,6 +181,9 @@ func (m listScreenModel) View() string {
 		var todoStr string
 		todo := m.activeTodoList[i]
 		remainSpaces := m.viewport.Width - len(todo.Text) - 30
+		if remainSpaces < 0 {
+			remainSpaces = 0
+		}
 		spacesStr := strings.Repeat(" ", remainSpaces)
 		cursor := " "
 		checked := " "
