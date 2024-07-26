@@ -28,7 +28,7 @@ F Explorar cuevas cercanas a Madrid $2 / 2024-07-26
 - Visitar Rascafría y el bosque finlandés  $3
 F Ir a la estación de Navacerrada $2 / 2024-07-26
 - Recorrer el Barrio de las Letras  $6
-- Recorrer la Milla de Oro en el Barrio de Salamanca  $7
+F Recorrer la Milla de Oro en el Barrio de Salamanca $7 / 2024-07-26
 F Conocer la estación fantasma del Barrio Chamberí $2 / 2024-07-26
 - Ir de tapas al Barrio de La Latina  $2
 F Hacer el Tapapiés en el Barrio de Lavapiés $2 / 2024-07-26
@@ -56,9 +56,9 @@ F Museo Nacional Thyssen-Bornemisza $2 / 2024-07-26
 - Rascafría y su Monasterio  $3
 - El Escorial y su Monasterio  $3
 - Alcalá de Henares y su Universidad  $3
-F Aranjuez y su Palacio $3 / 2024-07-26
+- Aranjuez y su Palacio  $3
 - Toledo y su Historia  $4
-F Segovia y su Acueducto $4 / 2024-07-26
+- Segovia y su Acueducto  $4
 - Ávila y su Muralla  $3
 F Córdoba y su Mezquita $4 / 2024-07-26
 @Bonus España
@@ -70,9 +70,9 @@ F Córdoba y su Mezquita $4 / 2024-07-26
 - Visitar la Sagrada Familia en Barcelona  $12
 - Ruta del vino en La Rioja  $12
 - Explorar la Catedral de Santiago de Compostela  $10
-- Ver el teatro romano de Cartagena  $12
-- Visitar el Museo Guggenheim en Bilbao  $10
-- Recorrer la Ruta de los Pueblos Blancos en Andalucía  $10
+F Ver el teatro romano de Cartagena $12 / 2024-07-26
+F Visitar el Museo Guggenheim en Bilbao $10 / 2024-07-26
+F Recorrer la Ruta de los Pueblos Blancos en Andalucía $10 / 2024-07-26
 - Conocer la Augusta Emerita (Merida)  $10
 @Bonus Europa
 - Volver al Coliseo en Roma  $25

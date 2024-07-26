@@ -246,9 +246,14 @@ Escape
 Up
 Escape
 Up
+Enter
 Sleep 500ms
 Escape
 Down
+Enter
+Escape
+Down
+Enter
 Escape
 Down
 Escape
@@ -261,11 +266,16 @@ Escape
 Down
 Escape
 Down
-Escape
-Down
+Sleep 3s
+Type "f"
+Sleep 3s
+Down@800ms 4
+Sleep 2s
+Type "r"
+Sleep 3s
+Down@800ms 4
 Sleep 2s
 Type "q"
-Sleep 1s
 Type "go run ."
 Enter
 Sleep 500ms
