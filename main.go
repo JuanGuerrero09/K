@@ -10,6 +10,7 @@ import (
 
 type ToDo struct {
 	isDone         bool
+	isHidden       bool
 	Text           string
 	Category       string
 	Points         int

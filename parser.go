@@ -29,10 +29,6 @@ func ParseFile(file *os.File) ([]ToDo, error) {
 		}
 		if strings.HasPrefix(line, "@") {
 			currentCategory = strings.TrimPrefix(line, "@")
-		} else if strings.HasPrefix(line, "<E>") {
-			currentCategory = "Bonus España"
-		} else if strings.HasPrefix(line, "<EU>") {
-			currentCategory = "Bonus Europa"
 		} else if strings.HasPrefix(line, "-") {
 			str := strings.TrimPrefix(line, "-")
 			parts := strings.Split(str, "$")
@@ -47,6 +43,9 @@ func ParseFile(file *os.File) ([]ToDo, error) {
 				Text:     strings.TrimSpace(text),
 				Points:   points,
 				Category: currentCategory,
+			}
+			if currentCategory == "Bonus España" || currentCategory == "Bonus Madrid" || currentCategory == "Bonus Europa" {
+				todo.isHidden = true
 			}
 			todos = append(todos, todo)
 		} else if strings.HasPrefix(line, "F") {
@@ -101,7 +100,7 @@ func saveFile(filename string, todos []ToDo) {
 		var str string
 		if todo.isDone {
 			str = "F " + todo.Text + " $" + strconv.Itoa(todo.Points) + " / " + todo.CompletionDate.Format("2006-01-02") + "\n"
-			} else {
+		} else {
 			str = "- " + todo.Text + "  $" + strconv.Itoa(todo.Points) + "\n"
 		}
 		_, err := file.WriteString(str)

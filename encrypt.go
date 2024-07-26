@@ -9,6 +9,10 @@ import (
 	"os"
 )
 
+var (
+	filename string = "list copy.txt"
+)
+
 func encryptFile(key, inputFile, outputFile string) error {
 	// Read the plaintext file
 	plaintext, err := os.ReadFile(inputFile)
@@ -82,7 +86,7 @@ func check(e error) {
 }
 
 func getEncryptedTodos(key string) (todos []ToDo, temp *os.File){
-	err := encryptFile(key, "list.txt", "newfile2.txt")
+	err := encryptFile(key, filename, "newfile2.txt")
 	check(err)
 	f, err := os.CreateTemp("", "sample")
 	if err != nil {
@@ -109,6 +113,6 @@ func encryptTodos(key string, todos []ToDo, f *os.File) {
 	saveFile(f.Name(), todos)
 	err := encryptFile(key, f.Name(), "newfile2.txt")
 	check(err)
-	err = decryptFile(key, "newfile2.txt", "list.txt")
+	err = decryptFile(key, "newfile2.txt", filename)
 	check(err)
 }

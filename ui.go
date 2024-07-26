@@ -8,6 +8,7 @@ import (
 	"strconv"
 	"strings"
 	"time"
+	"unicode/utf8"
 
 	"github.com/charmbracelet/bubbles/viewport"
 	tea "github.com/charmbracelet/bubbletea"
@@ -39,7 +40,7 @@ type listScreenModel struct {
 }
 
 func initialListmodel() *listScreenModel {
-	const width = 78
+	const width = 85
 
 	vp := viewport.New(width, 25)
 	vp.Style = lipgloss.NewStyle().
@@ -89,14 +90,14 @@ func (m listScreenModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	case tea.WindowSizeMsg:
 		m.width = msg.Width
 		m.height = msg.Height
-		if m.width/2 < 78 {
-			m.viewport.Width = 78
+		if m.width/2 < 85 {
+			m.viewport.Width = 85
 
 		} else {
 			m.viewport.Width = m.width / 2
 
 		}
-		if m.width < 78 {
+		if m.width < 85 {
 			m.viewport.Width = m.width - 2
 		}
 		m.viewport.Height = m.height - 2
@@ -115,6 +116,9 @@ func (m listScreenModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			}
 		case "enter", " ":
 			if m.cursor < len(m.activeTodoList) {
+				if m.activeTodoList[m.cursor].isHidden {
+					return m, cmd
+				}
 				m.activeTodoList[m.cursor].isDone = !m.activeTodoList[m.cursor].isDone
 				m.activeTodoList[m.cursor].CompletionDate = time.Now()
 				idx := slices.IndexFunc(m.todoList, func(t ToDo) bool {return t.Text == m.activeTodoList[m.cursor].Text})
@@ -156,9 +160,33 @@ func (m listScreenModel) View() string {
 			totalPoints += todo.Points
 		}
 	}
+
+	if getPoints(m.todoList) >= 50 {
+		for i := range(m.todoList){
+			if m.todoList[i].Category == "Bonus Madrid" {
+				m.todoList[i].isHidden = false
+			}
+		}
+	}
+
+	if getPoints(m.todoList) >= 70 {
+		for i := range(m.todoList){
+			if m.todoList[i].Category == "Bonus España" {
+				m.todoList[i].isHidden = false
+			}
+		}
+	}
+
+	if getPoints(m.todoList) >= 100 {
+		for i := range(m.todoList){
+			if m.todoList[i].Category == "Bonus Europa" {
+				m.todoList[i].isHidden = false
+			}
+		}
+	}
 	
 	l := "Points: " + strconv.Itoa(getPoints(m.todoList)) + "/" + strconv.Itoa(totalPoints)
-	remainSpaces := m.viewport.Width - len(l) - 27
+	remainSpaces := m.viewport.Width - len(l) - 23
 	l += strings.Repeat(" ", remainSpaces)
 	l += "Points    Date \n"
 	start := 0
@@ -180,7 +208,7 @@ func (m listScreenModel) View() string {
 	for i := start; i < end ; i++ {
 		var todoStr string
 		todo := m.activeTodoList[i]
-		remainSpaces := m.viewport.Width - len(todo.Text) - 30
+		remainSpaces := m.viewport.Width - utf8.RuneCountInString(todo.Text) - 26
 		if remainSpaces < 0 {
 			remainSpaces = 0
 		}
@@ -193,7 +221,7 @@ func (m listScreenModel) View() string {
 		completedTodoStyle := lipgloss.NewStyle().Foreground(lipgloss.Color("#68DA37"))
 		if currentCategory == "" {
 			currentCategory = todo.Category
-			categorySpaces := strings.Repeat(" ", m.viewport.Width - len(currentCategory) - 29)
+			categorySpaces := strings.Repeat(" ", m.viewport.Width - utf8.RuneCountInString(currentCategory) - 25)
 			var currentCategoryPoints int
 			var totalCategoryPoints int
 			for _, todo := range(m.todoList){
@@ -210,7 +238,7 @@ func (m listScreenModel) View() string {
 		}
 		if currentCategory != todo.Category {
 			currentCategory = todo.Category
-			categorySpaces := strings.Repeat(" ", m.viewport.Width - len(currentCategory) - 29)
+			categorySpaces := strings.Repeat(" ", m.viewport.Width - utf8.RuneCountInString(currentCategory) - 25)
 			var currentCategoryPoints int
 			var totalCategoryPoints int
 			for _, todo := range(m.todoList){
@@ -230,20 +258,20 @@ func (m listScreenModel) View() string {
 			cursor = ">"
 		}
 		if todo.isDone {
-			date = todo.CompletionDate.Format("2006-01-02")
-			checked = "x"
-			s := fmt.Sprintf("%s [%s] %s %s %s    %s", cursor, checked, todo.Text, spacesStr, lipgloss.NewStyle().Foreground(lipgloss.Color("#7F00FF")).Render(strconv.Itoa(todo.Points)), lipgloss.NewStyle().AlignHorizontal(lipgloss.Right).Render(date))
-			todoStr = completedTodoStyle.Render(s)
-			} else {
-				todoStr = fmt.Sprintf("%s [%s] %s %s %s", cursor, checked, todo.Text, spacesStr, lipgloss.NewStyle().Foreground(lipgloss.Color("#7F00FF")).Render(strconv.Itoa(todo.Points)))
-			}
-			
-			if todo.Category == "Other" {
-				todoStr = fmt.Sprintf("%s [%s] %s %s %s", cursor, checked, getRandomString(len(todo.Text)), spacesStr, lipgloss.NewStyle().Foreground(lipgloss.Color("#7F00FF")).Render(strconv.Itoa(todo.Points))) 
-			}
-			l += todoStr + "\n"
-			
+		date = todo.CompletionDate.Format("2006-01-02")
+		checked = "x"
+		s := fmt.Sprintf("%s [%s] %s %s %s    %s", cursor, checked, todo.Text, spacesStr, lipgloss.NewStyle().Foreground(lipgloss.Color("#7F00FF")).Render(strconv.Itoa(todo.Points)), lipgloss.NewStyle().AlignHorizontal(lipgloss.Right).Render(date))
+		todoStr = completedTodoStyle.Render(s)
+		} else {
+			todoStr = fmt.Sprintf("%s [%s] %s %s %s", cursor, checked, todo.Text, spacesStr, lipgloss.NewStyle().Foreground(lipgloss.Color("#7F00FF")).Render(strconv.Itoa(todo.Points)))
 		}
+		
+		if todo.isHidden {
+			todoStr = fmt.Sprintf("%s [%s] %s %s %s", cursor, checked, getRandomString(utf8.RuneCountInString(todo.Text)), spacesStr, lipgloss.NewStyle().Foreground(lipgloss.Color("#7F00FF")).Render(strconv.Itoa(todo.Points))) 
+		}
+		l += todoStr + "\n"
+		
+	}
 
 	l += "\nPress q to quit."
 
