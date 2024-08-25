@@ -44,8 +44,9 @@ func ParseFile(file *os.File) ([]ToDo, error) {
 				Points:   points,
 				Category: currentCategory,
 			}
-			if currentCategory == "Bonus España" || currentCategory == "Bonus Madrid" || currentCategory == "Bonus Europa" {
-				todo.isHidden = true
+			switch currentCategory {
+			case "Bonus España", "Planes por Madrid", "Bares", "Cafés", "Aventura", "Bonus Cerca de Madrid", "Bonus Europa":
+					todo.isHidden = true
 			}
 			todos = append(todos, todo)
 		} else if strings.HasPrefix(line, "F") {

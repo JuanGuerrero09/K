@@ -1,0 +1,209 @@
+### LISTA DE PLANES EN MADRID
+@Madrid Imprescindible
+- Gran Vía  $1
+- Parque de El Retiro  $1
+- Plaza Mayor  $1
+- Palacio Real  $1
+- Catedral de la Almudena  $1
+- Monasterio de las Descalzas  $2
+- Plaza de Cibeles  $1
+- Templo de Debod  $3
+- Fuente de Neptuno  $1
+- Puerta del Sol  $1
+- Básilica de San Francisco el Grande  $2
+- El Rastro  $2
+- Puerta de Alcalá  $1
+- Plaza de la Villa  $1
+- Plaza de Toros de las Ventas  $2
+- Iglesia de los Jerónimos  $2
+- Biblioteca Nacional  $3
+- Casa de América  $2
+- Librerías Cuesta de Moyano  $2
+- Real Monasterio de la Encarnación  $2
+- San Antonio de la Florida  $1
+@Barrios
+- Recorrer la Milla de Oro en el Barrio de Salamanca $1
+- Conocer la estación fantasma del Barrio Chamberí $2
+- Caminar el Paseo del Arte $1
+- Recorrer el Barrio de las Letras  $1
+- Ir por un vermut al Barrio de La Latina  $2
+- Ver el Paticano en el Barrio de Lavapiés  $2
+- Ir a bailar en el Barrio de Chueca  $2
+- Explorar tiendas vintage en el Barrio de Malasaña  $1
+@Planes por Madrid
+- Zara Home a decorar la casa $2
+- Ir en Bici por Madrid Río $2
+- Ver un partido del Madrid en un Bar $3
+- Ir a Wine Gogh $6
+- Cine en Ocine Caleido $5
+- Encontrar la puerta del Ratón Pérez $2
+- Bolos en Chamartín $3
+- Vistas en la Terraza en el Círculo de Bellas Artes $3
+- Ir a una fiesta de Taylor Swift $3
+- Mini golf + Bolos en cityplay $4
+- Probar un menú completo $2
+- Tomar una clase de cocina juntos $5
+- Visitar y ver el atardecer en el Templo de Debod $3
+- Ir a una Pista de Hielo $3
+- Ir a los Gatchas de Guay Panda $3
+- Ver el final de la Vuelta a España$4
+- Tomar una clase de baile $5
+- Picnic en el Retiro $2
+- Hacer una ruta de grafitis por Lavapiés $2
+- Subir al Faro de Moncloa $4
+- Caminar de Debod al Retiro $2
+- Ir a las fiestas de San Isidro $4
+- Visitar la Plaza del Dos de Mayo $2
+- Hacer el Tour del Bernabeu $6
+- Visitar la Rosaleda del Retiro $3
+- Ir a la San Silvestre Vallecana $3
+- Ir a Toy Panda $3
+- Ir a un running sushi $3
+- Ir a Sidrería el Tigre $3
+@Mercados
+- Mercado de Maravillas $2
+- Mercado de San Miguel $2
+- Mercado de San Antón $2
+- Mercado de San Fernando $2
+- Mercado de Vallehermoso $2
+- Mercado de San Leopoldo $2
+- Mercado de Motores $2
+- Mercado de Antón Martín $2
+- Mercado de la Cebada $2
+- Mercado de San Ildefonso $2
+@Conocer parques y jardines
+- El Retiro $2
+- Parque del Oeste $2
+- Casa de Campo $2
+- Parque de Berlin $2
+- Parque de Santander $2
+- Parque de Bravo Murillo $2
+- Jardines de Sabatini $2
+- Jardines de Campo del Moro $2
+- Parque el Capricho $2
+- Finca de Vista Alegre $2
+- Dehesa de la Villa $2
+- Real Jardín Botánico $2
+- Madrid Río $2
+- Parque Juan Carlos I $2
+- Jardines de San Francisco el Grande $2
+- Quinta de Torre Arias $2
+- Parque Cerro del Tío Pío $2
+- Quinta de los Molinos $2
+- Quinta de Fuente del Berro $2
+@Museos
+- Museo Nacional del Prado   $3
+- Museo del Romanticismo   $3
+- Museo de América   $3
+- Museo Arqueológico Nacional   $3
+- Museo Reina Sofía   $3
+- Museo Nacional de Antropología   $3
+- Museo Nacional Thyssen-Bornemisza   $3
+- Museo Sorolla $3
+- Museo de San Isidro $3
+- Museo del Jamón $3
+- Museo Cerralbo $3
+- Museo Geominero $3
+- Museo Tiflológico $3
+@Lugares de Madrid
+- Matadero de Madrid $2
+- Real Observatorio de Madrid  $2
+- Parque de Atracciones  $4
+- Parque Warner  $4
+- Teleférico de Madrid  $2
+- Faunia  $2
+- Zoo Aquarium de Madrid  $3
+- Planetario de Madrid  $2
+- Congreso de los Diputados $2
+@Bares
+- Irish Tavern $3
+- La Vía Láctea $3
+- Calle 365 $3
+- La Coquette $3
+- Jack's Library $3
+- Satán $3
+- Medieval Abbey $3
+- Bad Company 1920 $3
+- Salmón Gurú $3
+- Lovo Cocktail Bar $3
+- La Santoría $3
+- Ojalá $3
+- Casa Brava $3
+- Santos y Desamparados $3
+- Microteatro por dinero $3
+- Playback $3
+- Lady Bongo $3
+- La Manuela $3
+- Rockade Malasaña $3
+- Rosi La Loca $3
+@Cafés
+- Mama Pottery (A hacer tazas) $4
+- La Gatoteca $3
+- Salon des Fleurs $3
+- Café del Arte $3
+- Faraday $3
+- La Bicicleta $3
+- Kawaii Café $3
+- Lolina Vintage $3
+- Coco Mocca $3
+- Bloom $3
+- Natif $3
+@Aventura
+- Visitar Rascafría y el bosque finlandés  $6
+- Navacerrada – La Peñota – Cercedilla  $6
+- Navegar en el lago de Casa de Campo $4
+- Completar el Pasaporte Metro $3
+- Ver la Muralla de Madrid $2
+- Hacer el Camino Schmidt $5
+- Ruta por el monte de El Pilar $5
+- Ruta por El Pardo $5
+- Ir al Embalse de San Juan $5
+- Hacer el camino Smith  $6
+@Bonus Cerca de Madrid
+- Patones de Abajo y Patones de Arriba  $5
+- Rascafría y su Monasterio  $5
+- El Escorial y su Monasterio  $5
+- Alcalá de Henares y su Universidad  $5
+- Aranjuez y su Palacio  $5
+- Toledo y su Historia  $5
+- Segovia y su Acueducto  $5
+- Ávila y su Muralla  $5
+- Córdoba y su Mezquita  $5
+@Bonus España
+- Conocer la Playa  $10
+- Probar la paella valenciana  $10
+- Visitar Salamanca $6
+- Explorar la Alhambra en Granada  $12
+- Vivir Rocadragón en Gaztelugatxe  $16
+- Ir a la Plaza de España en Sevilla  $12
+- Visitar la Sagrada Familia en Barcelona  $12
+- Pasear por el Caminito del Rey  $10
+- Ruta del vino en La Rioja  $12
+- Hacer una escapada romántica a un Parador Nacional  $12
+- Explorar la Catedral de Santiago de Compostela  $10
+- Ver el teatro romano de Cartagena  $12
+- Visitar el Museo Guggenheim en Bilbao  $10
+- Recorrer la Ruta de los Pueblos Blancos en Andalucía  $10
+- Conocer la Augusta Emerita (Merida)  $10
+@Bonus Europa
+- Volver al Coliseo en Roma  $25
+- Ver la Torre Eiffel en París  $25
+- Hacer un Road Trip por (al menos) cuatro ciudades  $35
+- Tomar un vuelo de menos de 15 euros a un sitio random  $28
+- Visitar Europa del Este  $30
+- Pasear por Ámsterdam  $30
+- Explorar la Plaza de la Ciudad Vieja en Varsovia $25
+- Recorrer el centro histórico de Budapest $25
+- Visitar el Museo del Louvre  $20
+- Explorar la Ciudad Vieja de Praga  $30
+- Ver una aurora boreal en países Nórdicos  $38
+- Recorrer el casco antiguo de Viena $30
+- Crucero por el Mediterráneo  $30
+- Escapada romántica a Santorini  $35
+- Explorar el Palacio de Versalles  $18
+- Pasear por el casco antiguo de Bratislava $20
+- Visitar el Castillo de Edimburgo  $25
+- Recorrer los canales de Venecia  $25
+- Visitar el Partenón en Atenas  $38
+- Explorar el casco antiguo de Dubrovnik  $35
+- Explorar los Alpes Suizos  $30

@@ -29,6 +29,7 @@ func getRandomString(length int) string {
 	return string(b)
 }
 
+
 type listScreenModel struct {
 	todoList       []ToDo
 	activeTodoList []ToDo
@@ -75,6 +76,16 @@ func getPoints(todos []ToDo) int {
 		}
 	}
 	return count
+}
+
+func (m listScreenModel) hideCategory(name string, value int){
+	if getPoints(m.todoList) >= value {
+		for i := range(m.todoList){
+			if m.todoList[i].Category == name {
+				m.todoList[i].isHidden = false
+			}
+		}
+	}
 }
 
 func (m listScreenModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
@@ -161,13 +172,12 @@ func (m listScreenModel) View() string {
 		}
 	}
 
-	if getPoints(m.todoList) >= 50 {
-		for i := range(m.todoList){
-			if m.todoList[i].Category == "Bonus Madrid" {
-				m.todoList[i].isHidden = false
-			}
-		}
-	}
+	m.hideCategory("Planes por Madrid", 20)
+	m.hideCategory("Bares", 30)
+	m.hideCategory("Cafés", 30)
+	m.hideCategory("Aventura", 45)
+	m.hideCategory("Bonus Cerca de Madrid", 50)
+
 
 	if getPoints(m.todoList) >= 70 {
 		for i := range(m.todoList){

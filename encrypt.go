@@ -10,7 +10,7 @@ import (
 )
 
 var (
-	filename string = "list copy.txt"
+	filename string = "list.txt"
 )
 
 func encryptFile(key, inputFile, outputFile string) error {
@@ -86,15 +86,16 @@ func check(e error) {
 }
 
 func getEncryptedTodos(key string) (todos []ToDo, temp *os.File){
-	err := encryptFile(key, filename, "newfile2.txt")
+	err := encryptFile(key, filename, "list.txt")
 	check(err)
+// remove above if creating the build
 	f, err := os.CreateTemp("", "sample")
 	if err != nil {
 		fmt.Println("Error opening file:", err)
 		return nil, nil
 	}
 	defer os.Remove(f.Name())
-	err = decryptFile(key, "newfile2.txt", f.Name())
+	err = decryptFile(key, "list.txt", f.Name())
 	check(err)
 	file, err := os.Open(f.Name())
 	if err != nil {
@@ -111,8 +112,9 @@ func getEncryptedTodos(key string) (todos []ToDo, temp *os.File){
 
 func encryptTodos(key string, todos []ToDo, f *os.File) {
 	saveFile(f.Name(), todos)
-	err := encryptFile(key, f.Name(), "newfile2.txt")
+	err := encryptFile(key, f.Name(), "list.txt")
 	check(err)
-	err = decryptFile(key, "newfile2.txt", filename)
+// remove below if creating builds
+	err = decryptFile(key, "list.txt", filename)
 	check(err)
 }
