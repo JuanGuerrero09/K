@@ -36,7 +36,7 @@ export default function Map() {
 
   return (
     <MapContainer
-      className="border-amber-50"
+      className=" z-0 border-amber-50"
       center={[40.416775, -3.70379]}
       zoom={13.5}
     >
