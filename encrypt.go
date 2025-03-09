@@ -86,8 +86,8 @@ func check(e error) {
 }
 
 func getEncryptedTodos(key string) (todos []ToDo, temp *os.File){
-	err := encryptFile(key, filename, "list.txt")
-	check(err)
+	// err := encryptFile(key, filename, "list.txt")
+	// check(err)
 // remove above if creating the build
 	f, err := os.CreateTemp("", "sample")
 	if err != nil {
@@ -112,9 +112,11 @@ func getEncryptedTodos(key string) (todos []ToDo, temp *os.File){
 
 func encryptTodos(key string, todos []ToDo, f *os.File) {
 	saveFile(f.Name(), todos)
+	// err := encryptFile(key, f.Name(), "list.txt")
+	// check(err)
 	err := encryptFile(key, f.Name(), "list.txt")
 	check(err)
 // remove below if creating builds
-	err = decryptFile(key, "list.txt", filename)
-	check(err)
+	// err = decryptFile(key, "list.txt", filename)
+	// check(err)
 }

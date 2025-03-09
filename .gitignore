@@ -1,5 +1,5 @@
+node_modules
 *.log
-*.json
 .env
 *.jpg
 list.txt

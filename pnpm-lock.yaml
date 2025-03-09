@@ -1,0 +1,27 @@
+lockfileVersion: '6.0'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+dependencies:
+  '@flaticon/flaticon-uicons':
+    specifier: ^3.3.1
+    version: 3.3.1
+
+packages:
+
+  /@flaticon/flaticon-uicons@3.3.1:
+    resolution: {integrity: sha512-WN2zuECCdjuGBQrjzN0kpeSygzC5fgF8Q7pDR+FUuGtYWczSdIhIwoD+/fKBEfwqKfNIMZ1WouidevGQ4OJORg==}
+    optionalDependencies:
+      esbuild-linux-64: 0.14.54
+    dev: false
+
+  /esbuild-linux-64@0.14.54:
+    resolution: {integrity: sha512-EgjAgH5HwTbtNsTqQOXWApBaPVdDn7XcK+/PtJwZLT1UmpLoznPd8c5CxqsH2dQK3j05YsB3L17T8vE7cp4cCg==}
+    engines: {node: '>=12'}
+    cpu: [x64]
+    os: [linux]
+    requiresBuild: true
+    dev: false
+    optional: true

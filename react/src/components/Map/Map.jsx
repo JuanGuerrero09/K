@@ -35,7 +35,11 @@ export default function Map() {
   }
 
   return (
-    <MapContainer center={[40.416775, -3.70379]} zoom={13.5}>
+    <MapContainer
+      className="border-amber-50"
+      center={[40.416775, -3.70379]}
+      zoom={13.5}
+    >
       {/* OPEN STREEN MAPS TILES */}
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
