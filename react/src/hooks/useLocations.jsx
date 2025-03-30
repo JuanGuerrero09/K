@@ -21,7 +21,7 @@ const useLocations = () => {
 
   useEffect(() => {
     // Asumiendo que el archivo JSON está en la carpeta /data
-    fetch("/data/planes_madrid.json")
+    fetch("./data/madrid_data.json")
       .then((response) => response.json())
       .then((data) => setLocations(data));
   }, []);

@@ -1,11 +1,10 @@
-import useLocations from "../../hooks/useLocations";
+// import useLocations from "../../hooks/useLocations";
 
-const getCategories() => {
-
-}
+// const getCategories() => {
+//
+// }
 
 export default function Sidebar() {
-
   return (
     <>
       <label
