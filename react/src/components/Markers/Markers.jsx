@@ -1,4 +1,4 @@
-import { Icon } from "leaflet";
+import { Icon, Popup } from "leaflet";
 import { Marker } from "react-leaflet";
 
 const Markers = ({ places }) => {
@@ -16,23 +16,23 @@ const Markers = ({ places }) => {
   });
 
   function selectIcon(location) {
-    let isCompleted = location.is_complete;
-    console.log(location);
-    let isUnlocked = location.is_unlocked;
+    const { isCompleted, isUnlocked } = location;
     if (isCompleted && isUnlocked) {
       return visitedIcon;
     }
     if (!isCompleted && isUnlocked) {
       return unvisitedIcon;
-    } else {
-      return customIcon;
     }
+    return customIcon;
   }
+
+  console.log(places);
 
   return (
     <>
       {places.map((location, index) => {
         const { lat, lng } = location.geoCode;
+        console.log(lat, lng);
         return (
           <Marker
             key={index}

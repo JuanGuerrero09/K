@@ -21,9 +21,16 @@ const useLocations = () => {
 
   useEffect(() => {
     // Asumiendo que el archivo JSON está en la carpeta /data
-    fetch("./data/madrid_data.json")
-      .then((response) => response.json())
-      .then((data) => setLocations(data));
+    fetch("./madrid_data.json")
+      .then((response) => {
+        if (!response.ok) throw new Error("No se pudo cargar el JSON");
+        return response.json();
+      })
+      .then((data) => {
+        // console.log(data);
+        setLocations(data);
+      })
+      .catch((error) => console.error("Error cargando datos: ", error));
   }, []);
 
   return locations;

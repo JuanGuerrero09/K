@@ -19,7 +19,7 @@ export default function Navbar() {
         </label>
       </div>
       <div className="flex-1">
-        <a className="btn btn-ghost text-xl">Madrid</a>
+        <a className="btn btn-ghost text-xl">Visita Madrid!</a>
       </div>
       <div className="flex-none">
         <button className="btn btn-square btn-ghost">

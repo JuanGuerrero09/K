@@ -32,8 +32,8 @@ export default function Main() {
         <div className="bg-white shadow-md rounded-lg p-6 w-full text-center drawer-content">
           <Hero></Hero>
           <p className="mt-4 text-lg font-medium text-gray-700">
-            Tu puntuación actual:{points}
-            <span className="text-blue-600">{points}</span>
+            Tu puntuación actual: 
+            <span className="text-blue-600"> {points}</span>
           </p>
           {/* Mapa */}
           <div className="mt-6 w-full flex justify-center">
