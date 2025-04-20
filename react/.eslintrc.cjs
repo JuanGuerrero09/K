@@ -4,22 +4,23 @@ module.exports = {
     browser: true,
     es2021: true,
   },
-  extends: ["eslint:recommended", "plugin:react/recommended"],
-  parser: "@babel/eslint-parser",
+  extends: [
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended", // reglas de TypeScript
+  ],
+  parser: "@typescript-eslint/parser", // <- Cambia esto
   parserOptions: {
     ecmaVersion: "latest",
     sourceType: "module",
-    requireConfigFile: false,
     ecmaFeatures: {
       jsx: true,
     },
-    babelOptions: {
-      presets: ["@babel/preset-react"],
-    },
   },
-  plugins: ["react"],
+  plugins: ["react", "@typescript-eslint"],
   rules: {
     "react/react-in-jsx-scope": "off",
+    // Puedes agregar reglas personalizadas aquí si lo deseas
   },
   settings: {
     react: {
