@@ -2,11 +2,15 @@ import "./../../styles.css";
 import "leaflet/dist/leaflet.css";
 import { MapContainer, TileLayer } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
-import useLocations from "../../hooks/useLocations";
 import Markers from "../Markers/Markers";
+import { Location } from "@/types/location";
 
-export default function Map() {
-  const locations = useLocations();
+interface MapProps {
+  locations: Location[];
+  selectedLocation: Location | null;
+}
+
+export default function Map({ locations, selectedLocation }: MapProps) {
   return (
     <MapContainer
       className=" z-0 border-amber-50"

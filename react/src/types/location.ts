@@ -1,10 +1,12 @@
 export interface Location {
-  site_name: string;
+  id: number;
+  name: string;
   site: string;
   geoCode: [number, number];
   points: number;
+  description: string;
   category: string;
-  is_complete: boolean;
+  visited: boolean;
   date_of_completion: string;
   is_unlocked: boolean;
 }
